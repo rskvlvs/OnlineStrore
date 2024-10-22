@@ -10,5 +10,8 @@ namespace OnlineStrore.Commands.Client.Create
 
         [Required, EmailAddress]
         public string Email { get; set; }
+
+        [Required, MaxLength (255)]
+        public string Password { get; set; }
     }
 }

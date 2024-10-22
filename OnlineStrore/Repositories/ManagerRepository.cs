@@ -12,12 +12,15 @@ namespace OnlineStrore.Repositories
     {
         public async Task<Guid> CreateManagerAsync(IContext context, CreateManagerCommand request, CancellationToken cancellationToken)
         {
+            if (context.Managers.FirstOrDefault(m => m.Email == request.Email) != null)
+                throw new AlreadyCreatedException(request.Email); 
             Guid id = Guid.NewGuid();
             await context.Managers.AddAsync(new Manager
             {
                 Id = id,
                 Name = request.Name,
-                Email = request.Email
+                Email = request.Email,
+                Password = request.Password
             });
             await context.SaveChangesAsync(cancellationToken);
             return id;

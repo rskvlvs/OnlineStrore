@@ -12,12 +12,15 @@ namespace OnlineStrore.Repositories
     {
         public async Task<Guid> CreateClientAsync(IContext context, CreateClientCommand request, CancellationToken cancellationToken)
         {
-            Guid id = Guid.NewGuid();
+            if (context.Clients.FirstOrDefault(c => c.Email == request.Email) != null)
+                throw new AlreadyCreatedException(request.Email);
+            Guid id = Guid.NewGuid();       
             await context.Clients.AddAsync(new Client
             {
                 Id = id,
                 Name = request.Name,
-                Email = request.Email
+                Email = request.Email,
+                Password = request.Password,
             });
             await context.SaveChangesAsync(cancellationToken);
             return id;
