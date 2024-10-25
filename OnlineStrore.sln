@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStrore", "OnlineStrore\OnlineStrore.csproj", "{7672DC44-B38C-471C-859C-CF717CC86C53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Storage.MS_SQL", "OnlineStore.Storage.MS_SQL\OnlineStore.Storage.MS_SQL.csproj", "{F2BD8915-FCF2-4052-8DED-9D80061D5A72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Storage.MS_SQL", "OnlineStore.Storage.MS_SQL\OnlineStore.Storage.MS_SQL.csproj", "{F2BD8915-FCF2-4052-8DED-9D80061D5A72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Logic", "OnlineStore.Logic\OnlineStore.Logic.csproj", "{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F2BD8915-FCF2-4052-8DED-9D80061D5A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2BD8915-FCF2-4052-8DED-9D80061D5A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2BD8915-FCF2-4052-8DED-9D80061D5A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
