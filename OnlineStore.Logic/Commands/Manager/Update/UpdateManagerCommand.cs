@@ -1,16 +1,30 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStrore.Logic.Commands.Manager.Update
 {
     public class UpdateManagerCommand : IRequest<Guid>
     {
+        [Required]
         public Guid Id { get; set; } //Айдишник, по которому надо искать
 
-        [Required, MaxLength(255)]
+        [MaxLength(255)]
         public string Name { get; set; }
 
-        [Required, EmailAddress]
+        [EmailAddress]
         public string Email { get; set; }
+
+        [Phone]
+        public string PhoneNumber {  get; set; }
+    }
+    public class UpdateManagerValidator : AbstractValidator<UpdateManagerCommand>
+    {
+        public UpdateManagerValidator() 
+        {
+            RuleFor(UpdateManagerCommand => UpdateManagerCommand.Id).NotEqual(Guid.Empty);
+            RuleFor(UpdateManagerCommand => UpdateManagerCommand.Name).MaximumLength(255);
+            RuleFor(UpdateManagerCommand => UpdateManagerCommand.Email).EmailAddress();
+        }
     }
 }

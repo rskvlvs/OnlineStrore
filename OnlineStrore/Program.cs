@@ -1,7 +1,9 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using OnlineStore.Storage.MS_SQL;
+using OnlineStrore.Extensions;
+using OnlineStrore.Logic.Commands.Client.Create;
+using OnlineStrore.Logic.Mappers.ClientMap;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMediatR(typeof(Program));
-//builder.Services.AddAutoMapper();
+
+builder.Services.AddWebServices();
 
 builder.Services.AddDbContext<Context>(options =>
 {

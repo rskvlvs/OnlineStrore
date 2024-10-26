@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStrore.Logic.Commands.Client.Create
@@ -13,5 +14,25 @@ namespace OnlineStrore.Logic.Commands.Client.Create
 
         [Required, MaxLength (255)]
         public string Password { get; set; }
+
+        [Required, Phone]
+        public string PhoneNubmer {  get; set; }
+    }
+    public class CreateClientCommandValidator : AbstractValidator<CreateClientCommand>
+    {
+        public CreateClientCommandValidator()
+        {
+            RuleFor(CreateClientCommand =>
+            CreateClientCommand.Name).NotEmpty().MaximumLength(255);
+
+            RuleFor(CreateClientCommand =>
+            CreateClientCommand.Email).NotEmpty().EmailAddress();
+
+            RuleFor(CreateClientCommand =>
+            CreateClientCommand.Password).NotEmpty().MaximumLength(255);
+
+            RuleFor(CreateClientCommand =>
+            CreateClientCommand.PhoneNubmer).NotEmpty(); 
+        }
     }
 }

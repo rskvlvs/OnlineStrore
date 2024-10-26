@@ -20,7 +20,8 @@ namespace OnlineStrore.Logic.Repositories
                 Id = id,
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password
+                Password = request.Password,
+                PhoneNumber = request.PhoneNubmer,
             }, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
             return id;
@@ -61,6 +62,7 @@ namespace OnlineStrore.Logic.Repositories
 
             manager.Name = request.Name ?? manager.Name;
             manager.Email = request.Email ?? manager.Email;
+            manager.PhoneNumber = request.PhoneNumber ?? manager.PhoneNumber;
             await context.SaveChangesAsync(cancellationToken);
 
             return manager.Id;
