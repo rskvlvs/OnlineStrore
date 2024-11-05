@@ -15,6 +15,7 @@ namespace OnlineStore.Storage.MS_SQL.DataBase.Interfaces
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Manager> Managers { get; set; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken); 
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        
     }
 }

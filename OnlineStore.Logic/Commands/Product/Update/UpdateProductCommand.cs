@@ -6,7 +6,6 @@ namespace OnlineStrore.Logic.Commands.Product.Update
 {
     public class UpdateProductCommand : IRequest<Guid>
     {
-        [Required]
         public Guid Id { get; set; } //По которому буду искать
 
         [MaxLength(255)]
@@ -20,8 +19,14 @@ namespace OnlineStrore.Logic.Commands.Product.Update
     {
         public UpdateProductCommandValidator() 
         {
-            RuleFor(UpdateProductCommand => UpdateProductCommand.Id).NotEqual(Guid.Empty);
-            RuleFor(UpdateProductCommand => UpdateProductCommand.Name).MaximumLength(255);
+            RuleFor(UpdateProductCommand => UpdateProductCommand.Id).NotEqual(Guid.Empty).WithMessage("ProductId field is required");
+
+            // Проверка, что хотя бы одно из полей заполнено
+            RuleFor(command => command)
+                .Must(command => !string.IsNullOrWhiteSpace(command.Name) ||
+                                 !command.Cost.HasValue ||
+                                 !command.CountOfProduct.HasValue)
+                .WithMessage("At least one of the fields (Name, Cost, CountOfProduct) must be provided.");
         }
     }
 }

@@ -1,28 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Logic.Auth.Hasher;
+using OnlineStore.Logic.Commands.Client.Login;
+using OnlineStore.Logic.JWT;
 using OnlineStore.Storage.MS_SQL;
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using OnlineStrore.Logic.Commands.Client.Create;
 using OnlineStrore.Logic.Commands.Client.Update;
 using OnlineStrore.Logic.Exceptions;
 using OnlineStrore.Logic.Repositories.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStrore.Logic.Repositories
 {
     public class ClientRepository : IClientRepository
     {
+        private readonly IPasswordHasher passwordHasher;
+        private readonly IJwtPorvider jwtProvider; 
+
+        public ClientRepository(IPasswordHasher _passwordHasher, IJwtPorvider _jwtprovider)
+            => (passwordHasher, jwtProvider) = (_passwordHasher, _jwtprovider);
         public async Task<Guid> CreateClientAsync(IContext context, CreateClientCommand request, CancellationToken cancellationToken)
         {
             if (await context.Clients.FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken) != null)
                 throw new AlreadyCreatedException(request.Email);
-            Guid id = Guid.NewGuid();       
+            Guid id = Guid.NewGuid();
+            var hashedpassword = passwordHasher.Generate(request.Password);
             await context.Clients.AddAsync(new Client
             {
                 Id = id,
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password,
+                Password = hashedpassword,
                 PhoneNumber = request.PhoneNubmer
             }, cancellationToken);
+
             await context.SaveChangesAsync(cancellationToken);
             return id;
         }
@@ -52,6 +63,34 @@ namespace OnlineStrore.Logic.Repositories
             if (client == null || client.Id != id)
                 throw new NotFoundException(id);
             return client;
+        }
+
+        public async Task<Client> GetClientByEmailAsync(IContext context, string email, CancellationToken cancellationToken)
+        {
+            var client = await context.Clients.FirstOrDefaultAsync(c => c.Email == email, cancellationToken);
+
+            if (client == null || client.Email != email)
+                throw new NotFoundException();
+            return client;
+        }
+
+        public async Task<string> LoginClientAsync(IContext context, LoginClientCommand request, CancellationToken cancellationtoken)
+        {
+            try
+            {
+                var client = await GetClientByEmailAsync(context, request.Email, cancellationtoken);
+                var result = passwordHasher.Verify(request.Password, client.Password);
+                if (result == false)
+                    throw new ValidationException("Wrong passwod or Email");
+
+                var token = jwtProvider.GenerateToken(client); 
+                return token;                     
+            }
+            catch
+            {
+                throw new ValidationException("Wrong passwod or Email");
+            }
+            
         }
 
         public async Task<Guid> UpdateClientAsync(IContext context, UpdateClientCommand request, CancellationToken cancellationToken)

@@ -11,7 +11,7 @@ namespace OnlineStrore.Logic.Commands.Manager.Delete
     {
         public DeleteManagerCommandValidator()
         {
-            RuleFor(DeleteManagerCommand => DeleteManagerCommand.Id).NotEqual(Guid.Empty);
+            RuleFor(DeleteManagerCommand => DeleteManagerCommand.Id).NotEqual(Guid.Empty).WithMessage("Id field is required");
         }
     }
 }

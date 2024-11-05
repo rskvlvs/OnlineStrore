@@ -6,16 +6,13 @@ namespace OnlineStrore.Logic.Commands.Client.Create
 {
     public class CreateClientCommand : IRequest<Guid>
     {
-        [Required, MaxLength(255)]
         public string Name { get; set; }
 
-        [Required, EmailAddress]
         public string Email { get; set; }
 
-        [Required, MaxLength (255)]
         public string Password { get; set; }
 
-        [Required, Phone]
+        [Phone]
         public string PhoneNubmer {  get; set; }
     }
     public class CreateClientCommandValidator : AbstractValidator<CreateClientCommand>
@@ -23,16 +20,29 @@ namespace OnlineStrore.Logic.Commands.Client.Create
         public CreateClientCommandValidator()
         {
             RuleFor(CreateClientCommand =>
-            CreateClientCommand.Name).NotEmpty().MaximumLength(255);
+            CreateClientCommand.Name)
+                .NotEmpty()
+                .WithMessage("Name field is required")
+                .MaximumLength(255)
+                .WithMessage("Name field has maxLength 255");
 
             RuleFor(CreateClientCommand =>
-            CreateClientCommand.Email).NotEmpty().EmailAddress();
+            CreateClientCommand.Email)
+                .NotEmpty()
+                .WithMessage("Email field is required")
+                .EmailAddress()
+                .WithMessage("Invalid email format");
 
             RuleFor(CreateClientCommand =>
-            CreateClientCommand.Password).NotEmpty().MaximumLength(255);
+            CreateClientCommand.Password)
+                .NotEmpty()
+                .WithMessage("Password field is required")
+                .MaximumLength(255)
+                .WithMessage("Name field has maxLength 255");
+
 
             RuleFor(CreateClientCommand =>
-            CreateClientCommand.PhoneNubmer).NotEmpty(); 
+            CreateClientCommand.PhoneNubmer).NotEmpty().WithMessage("PhoneNubmer field is required"); 
         }
     }
 }

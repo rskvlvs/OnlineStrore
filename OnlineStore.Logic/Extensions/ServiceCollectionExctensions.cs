@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineStore.Logic.Auth.Hasher;
 using OnlineStore.Logic.Behaviors;
+using OnlineStore.Logic.JWT;
 using OnlineStore.Storage.MS_SQL;
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using OnlineStrore.Logic.Repositories;
@@ -22,6 +24,8 @@ namespace OnlineStore.Logic.Extensions
             service.AddSingleton<IProductTypeRepository, ProductTypeRepository>();
             service.AddSingleton<ISaleRepository, SaleRepository>();
 
+            service.AddSingleton<IPasswordHasher, PasswordHasher>();
+            service.AddSingleton<IJwtPorvider, JwtPorvider>();
             // Регистрируем AutoMapper для текущей сборки
             service.AddAutoMapper(Assembly.GetExecutingAssembly());
 

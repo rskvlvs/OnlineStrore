@@ -47,9 +47,13 @@ namespace OnlineStrore.Logic.Repositories
 
         public async Task<Product> GetProductAsync(IContext context, Guid id, CancellationToken cancellationToken)
         {
-            var product = await context.Products.Include(p => p.ProductType).FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            var product = await context.Products.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            if (context is Context _context)
+                await _context.Entry(product).Reference(p => p.ProductType).LoadAsync(); 
+            else
+                throw new InvalidOperationException("Invalid context type");
 
-            if(product == null || product.Id != id)
+            if (product == null || product.Id != id)
                 throw new NotFoundException();
             return product;
         }

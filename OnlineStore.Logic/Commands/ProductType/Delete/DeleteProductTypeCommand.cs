@@ -13,7 +13,7 @@ namespace OnlineStrore.Logic.Commands.ProductType.Delete
     {
         public DeleteProductTypeCommandValidator() 
         {
-            RuleFor(DeleteProductTypeCommand => DeleteProductTypeCommand.Id).NotEqual(Guid.Empty);
+            RuleFor(DeleteProductTypeCommand => DeleteProductTypeCommand.Id).NotEqual(Guid.Empty).WithMessage("ProductTypeId field is required");
         }
     }
 }

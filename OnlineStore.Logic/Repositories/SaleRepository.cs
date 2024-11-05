@@ -18,7 +18,7 @@ namespace OnlineStrore.Logic.Repositories
                 Id = id,
                 DateTime = DateTime.Now,
                 ClientId = request.ClientId,
-                TotalSum = request.TotalSum,
+                TotalSum = request.TotalSum ?? 0,
             };
             await context.Sales.AddAsync(sale, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
@@ -48,10 +48,13 @@ namespace OnlineStrore.Logic.Repositories
         {
             // Получаем последнюю покупку клиента с подгрузкой данных о клиенте (имени)
             var sale = await context.Sales
-                .Include(s => s.Client) // Подгружаем данные о клиенте (например, его имя)
                 .Where(s => s.ClientId == id) // Фильтруем покупки по идентификатору клиента
                 .OrderByDescending(s => s.DateTime) // Сортируем по дате покупки, чтобы взять последнюю
                 .FirstOrDefaultAsync(cancellationToken); // Получаем последнюю покупку
+            if(context is Context _context)
+                await _context.Entry(sale).Reference(s => s.Client).LoadAsync();
+            else
+                throw new InvalidOperationException("Invalid context type");
             if (sale == null || sale.Id != id)
                 throw new NotFoundException(id);
             return sale;

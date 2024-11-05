@@ -6,7 +6,6 @@ namespace OnlineStrore.Logic.Commands.Client.Delete
 {
     public class DeleteClientCommand : IRequest
     {
-        [Required]
         public Guid Id { get; set; }
     }
     public class DeleteClientCommandValidator : AbstractValidator<DeleteClientCommand>
@@ -14,7 +13,8 @@ namespace OnlineStrore.Logic.Commands.Client.Delete
         public DeleteClientCommandValidator() 
         {
             RuleFor(DeleteClientCommand =>
-            DeleteClientCommand.Id).NotEqual(Guid.Empty); 
+            DeleteClientCommand.Id).NotEqual(Guid.Empty)
+            .WithMessage("Id fielf is required"); 
         }
 
     }

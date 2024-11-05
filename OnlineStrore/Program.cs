@@ -1,9 +1,8 @@
-using MediatR;
 using Microsoft.EntityFrameworkCore;
+using OnlineStore.Logic.JWT;
 using OnlineStore.Storage.MS_SQL;
 using OnlineStrore.Extensions;
-using OnlineStrore.Logic.Commands.Client.Create;
-using OnlineStrore.Logic.Mappers.ClientMap;
+using OnlineStrore.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +13,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+
 
 builder.Services.AddWebServices();
+
 
 builder.Services.AddDbContext<Context>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 
 var app = builder.Build();
 
@@ -30,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ValidationExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
