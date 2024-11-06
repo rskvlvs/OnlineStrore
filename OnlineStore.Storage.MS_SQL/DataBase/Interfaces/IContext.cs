@@ -13,7 +13,6 @@ namespace OnlineStore.Storage.MS_SQL.DataBase.Interfaces
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public DbSet<Manager> Managers { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         

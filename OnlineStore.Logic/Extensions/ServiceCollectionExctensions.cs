@@ -19,7 +19,6 @@ namespace OnlineStore.Logic.Extensions
             service.AddScoped<IContext, Context>();
 
             service.AddSingleton<IClientRepository, ClientRepository>();
-            service.AddSingleton<IManagerRepository, ManagerRepository>();
             service.AddSingleton<IProductRepository, ProductRepository>();
             service.AddSingleton<IProductTypeRepository, ProductTypeRepository>();
             service.AddSingleton<ISaleRepository, SaleRepository>();

@@ -21,14 +21,14 @@ namespace OnlineStrore.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<Guid>> CreateProductType(CreateProductTypeCommand request, CancellationToken cancellationToken)
         {
             var typeId = await mediator.Send(request, cancellationToken);
             return Ok(typeId);
         }
 
-        [HttpGet]
+        [HttpGet("allTypes")]
         public async Task<ActionResult<ProductTypeListVm>> GetAllProductTypes(CancellationToken cancellationToken)
         {
             var types = await mediator.Send(new GetProductTypeListQuery(), cancellationToken);

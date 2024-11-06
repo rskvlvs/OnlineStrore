@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Logic.Commands.Client.Login;
 using OnlineStrore.Dto;
@@ -37,24 +38,32 @@ namespace OnlineStrore.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("allClientsInfo")]
         public async Task<ActionResult<ClientListVm>> GetAllClients(CancellationToken cancellationToken)
         {
             var clients = await mediator.Send(new GetClientListQuery(), cancellationToken);
             return Ok(clients);
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<ClientVm>> GetClient(Guid id, CancellationToken cancellationToken)
+        [Authorize]
+        [HttpGet("clientInfo")]
+        public async Task<ActionResult<ClientVm>> GetClient(CancellationToken cancellationToken)
         {
+            bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
+            if (!res)
+                return BadRequest(); 
             var query = new GetClientQuery() { Id = id };
             var client = await mediator.Send(query, cancellationToken);
             return Ok(client);
         }
 
-        [HttpPatch("{id:guid}")]
-        public async Task<ActionResult<Guid>> UpdateClient(Guid id, UpdateClientDto clientDto, CancellationToken cancellationToken)
+        [Authorize]
+        [HttpPatch("updateClient")]
+        public async Task<ActionResult<Guid>> UpdateClient(UpdateClientDto clientDto, CancellationToken cancellationToken)
         {
+            bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
+            if (!res)
+                return BadRequest();
             var request = new UpdateClientCommand()
             {
                 Id = id,
@@ -66,9 +75,13 @@ namespace OnlineStrore.Controllers
             return Ok(clientId);
         }
 
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteClient(Guid id, CancellationToken cancellationToken)
+        [Authorize]
+        [HttpDelete("deleteClient")]
+        public async Task<IActionResult> DeleteClient(CancellationToken cancellationToken)
         {
+            bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
+            if (!res)
+                return BadRequest();
             var request = new DeleteClientCommand() { Id = id };
             await mediator.Send(request, cancellationToken);
             return Ok("Client has been deleted!");

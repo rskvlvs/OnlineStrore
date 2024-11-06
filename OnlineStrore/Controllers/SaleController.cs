@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStrore.Dto;
 using OnlineStrore.Logic.Commands.Sale.Create;
@@ -19,31 +20,45 @@ namespace OnlineStrore.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<Guid>> CreateSale(Guid id, CreateSaleDto saleDto, CancellationToken cancellationToken)
+        [Authorize]
+        [HttpPost("createSale")]
+        public async Task<ActionResult<Guid>> CreateSale(CreateSaleDto saleDto, CancellationToken cancellationToken)
         {
+            bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
+            if (!res)
+                return BadRequest();
             var request = new CreateSaleCommand() { ClientId = id, TotalSum = saleDto.TotalSum };
             var saleId = await mediator.Send(request, cancellationToken); 
             return Ok(saleId);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<SaleListVm>> GetAllUserSales(Guid id, CancellationToken cancellationToken)
+        [Authorize]
+        [HttpGet("allSales")]
+        public async Task<ActionResult<SaleListVm>> GetAllUserSales(CancellationToken cancellationToken)
         {
+            bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
+            if (!res)
+                return BadRequest();
+
             var query = new GetSaleListQuery() { UserId = id };
             var sales = await mediator.Send(query, cancellationToken);
             return Ok(sales);
         }
 
-        [HttpGet("{id}/last")]
-        public async Task<ActionResult<SaleVm>> GetLastUserSale(Guid id, CancellationToken cancellationToken)
+        [Authorize]
+        [HttpGet("lastSale")]
+        public async Task<ActionResult<SaleVm>> GetLastUserSale(CancellationToken cancellationToken)
         {
+            bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
+            if (!res)
+                return BadRequest();
             var query = new GetSaleQuery() { UserId = id };
             var sales = await mediator.Send(query, cancellationToken);
             return Ok(sales);
         }
 
-        [HttpDelete("{id}")]
+
+        [HttpDelete("deleteSale")]
         public async Task<IActionResult> DeleteSale(Guid id, CancellationToken cancellationToken)
         {
             var request = new DeleteSaleCommand() { Id  = id };
