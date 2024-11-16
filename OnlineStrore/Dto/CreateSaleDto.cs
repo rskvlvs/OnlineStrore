@@ -2,6 +2,6 @@
 {
     public class CreateSaleDto
     {
-        public uint? TotalSum {  get; set; }
+        public double? TotalSum {  get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace OnlineStrore.Logic.Repositories
                 Name = request.Name,
                 Cost = request.Cost,
                 CountOfProduct = request.CountOfProduct,
+                Characteristics = request.Characteristics,
                 ProductTypeId = (Guid)request.ProductTypeId,
             }, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
@@ -39,7 +40,7 @@ namespace OnlineStrore.Logic.Repositories
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync(IContext context, CancellationToken cancellationToken)
         {
-            var products = await context.Products.ToListAsync(cancellationToken);
+            var products = await context.Products.Include(p => p.ProductType.Name).ToListAsync(cancellationToken);
             if (products.Count == 0)
                 throw new NotFoundException();
             return products;
@@ -68,6 +69,7 @@ namespace OnlineStrore.Logic.Repositories
             product.Name = request.Name ?? product.Name;
             product.Cost = request.Cost ?? product.Cost;
             product.CountOfProduct = request.CountOfProduct ?? product.CountOfProduct;
+            product.Characteristics = request.Characteristics ?? product.Characteristics;
 
             await context.SaveChangesAsync(cancellationToken);
             return product.Id; 

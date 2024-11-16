@@ -11,7 +11,9 @@ namespace OnlineStrore.Logic.Commands.Product.Update
         [MaxLength(255)]
         public string Name { get; set; }
 
-        public uint? Cost {  get; set; }
+        public double? Cost {  get; set; }
+        public string Characteristics { get; set; }
+
 
         public uint? CountOfProduct {  get; set; }
     }
@@ -25,8 +27,9 @@ namespace OnlineStrore.Logic.Commands.Product.Update
             RuleFor(command => command)
                 .Must(command => !string.IsNullOrWhiteSpace(command.Name) ||
                                  !command.Cost.HasValue ||
-                                 !command.CountOfProduct.HasValue)
-                .WithMessage("At least one of the fields (Name, Cost, CountOfProduct) must be provided.");
+                                 !command.CountOfProduct.HasValue ||
+                                 !string.IsNullOrEmpty(command.Characteristics))
+                .WithMessage("At least one of the fields (Name, Cost, CountOfProduct, Characteristics) must be provided.");
         }
     }
 }

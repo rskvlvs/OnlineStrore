@@ -15,4 +15,9 @@
     <ProjectReference Include="..\OnlineStore.Storage.MS_SQL\OnlineStore.Storage.MS_SQL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Images\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

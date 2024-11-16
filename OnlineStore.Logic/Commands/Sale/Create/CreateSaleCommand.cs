@@ -8,7 +8,7 @@ namespace OnlineStrore.Logic.Commands.Sale.Create
     {
         public Guid ClientId { get; set; }
 
-        public uint? TotalSum { get; set; }
+        public double? TotalSum { get; set; }
     }
     public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
     {

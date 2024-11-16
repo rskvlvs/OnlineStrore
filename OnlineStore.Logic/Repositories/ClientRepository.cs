@@ -7,6 +7,7 @@ using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using OnlineStrore.Logic.Commands.Client.Create;
 using OnlineStrore.Logic.Commands.Client.Update;
 using OnlineStrore.Logic.Exceptions;
+using OnlineStrore.Logic.Queries.Client.GetClient;
 using OnlineStrore.Logic.Repositories.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,23 +20,25 @@ namespace OnlineStrore.Logic.Repositories
 
         public ClientRepository(IPasswordHasher _passwordHasher, IJwtPorvider _jwtprovider)
             => (passwordHasher, jwtProvider) = (_passwordHasher, _jwtprovider);
-        public async Task<Guid> CreateClientAsync(IContext context, CreateClientCommand request, CancellationToken cancellationToken)
+        public async Task<string> CreateClientAsync(IContext context, CreateClientCommand request, CancellationToken cancellationToken)
         {
             if (await context.Clients.FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken) != null)
                 throw new AlreadyCreatedException(request.Email);
             Guid id = Guid.NewGuid();
             var hashedpassword = passwordHasher.Generate(request.Password);
-            await context.Clients.AddAsync(new Client
+            var client = new Client()
             {
                 Id = id,
                 Name = request.Name,
                 Email = request.Email,
                 Password = hashedpassword,
                 PhoneNumber = request.PhoneNubmer
-            }, cancellationToken);
-
+            };
+            await context.Clients.AddAsync(client, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
-            return id;
+            var token = jwtProvider.GenerateToken(client);
+
+            return token;
         }
 
         public async Task DeleteClientAsync(IContext context, Guid id, CancellationToken cancellationToken)

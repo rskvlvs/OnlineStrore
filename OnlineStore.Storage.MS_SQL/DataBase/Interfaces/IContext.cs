@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineStore.Storage.MS_SQL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace OnlineStore.Storage.MS_SQL.DataBase.Interfaces
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         

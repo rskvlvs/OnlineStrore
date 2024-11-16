@@ -6,8 +6,7 @@ namespace OnlineStore.Storage.MS_SQL
     {
         public Guid Id { get; set; }
 
-        [Required]
-        public uint TotalSum { get; set; } = 0;
+        public double TotalSum { get; set; } = 0;
 
         public DateTime DateTime { get; set; }
 

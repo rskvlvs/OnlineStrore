@@ -1,0 +1,15 @@
+﻿    <!-- Сайдбар -->
+<div class="sidebar">
+    <a href="@Url.Action("Index", "Home", new { isAuthorize = ViewBag.IsUserLoggedIn})">Главная</a>
+    <a href="@Url.Action("Sale", "Home", new { isAuthorize = ViewBag.IsUserLoggedIn})">Распродажа</a>
+    <a href="@Url.Action("News", "Home", new { isAuthorize = ViewBag.IsUserLoggedIn})">Новинки</a>
+    <a href="@Url.Action("Contact", "Home", new {isAuthorize = ViewBag.IsUserLoggedIn})">Наши контакты</a>
+
+    <!-- Партнёры -->
+    <div class="partners">
+        <h2>Наши партнеры</h2>
+        <a href="https://www.divan.ru/"><img src="~/images/диванру.jpg" alt="Диванру"></a>
+        <a href="https://lemanapro.ru/catalogue/"><img src="~/images/лемана.jpg" alt="Леруа"></a>
+        <a href="https://hoff.ru/"><img src="~/images/Хоф.jpg" alt="Хофф"></a>
+    </div>
+</div>

@@ -14,7 +14,7 @@ namespace OnlineStrore.Logic.Repositories.Interfaces
 
         Task<Client> GetClientByEmailAsync(IContext context, string email, CancellationToken cancellationToken);
 
-        Task<Guid> CreateClientAsync(IContext context, CreateClientCommand request, CancellationToken cancellationToken);
+        Task<string> CreateClientAsync(IContext context, CreateClientCommand request, CancellationToken cancellationToken);
 
         Task<string> LoginClientAsync(IContext context, LoginClientCommand request, CancellationToken cancellationtoken);
 

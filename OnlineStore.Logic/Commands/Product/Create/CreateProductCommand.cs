@@ -10,6 +10,9 @@ namespace OnlineStrore.Logic.Commands.Product.Create
 
         public uint Cost { get; set; }
 
+        public string Characteristics { get; set; }
+
+
         public uint CountOfProduct {  get; set; }
 
         public Guid ProductTypeId { get; set; }
@@ -24,7 +27,8 @@ namespace OnlineStrore.Logic.Commands.Product.Create
             RuleFor(CreateProductCommand => CreateProductCommand.Cost).NotEmpty().WithMessage("Cost field is required");
             RuleFor(CreateProductCommand => CreateProductCommand.CountOfProduct).NotEmpty().WithMessage("Count of product field is required");
 
-            RuleFor(CreateProductCommand => CreateProductCommand.ProductTypeId).NotEmpty().WithMessage("ProductTypeId field is required"); 
+            RuleFor(CreateProductCommand => CreateProductCommand.ProductTypeId).NotEmpty().WithMessage("ProductTypeId field is required");
+            RuleFor(create => create.Characteristics).NotEmpty().MaximumLength(400); 
         }
     }
 }
