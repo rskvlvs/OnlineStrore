@@ -1,0 +1,35 @@
+﻿@using OnlineStore.Logic.Commands.Feedback
+<!-- Модальное окно регистрации -->
+@model CreateFeedbackCommand
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оставить отзыв</title>
+    <!-- Подключаем стили -->
+    <link href="@Url.Content("~/css/styles.css")" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- Модальное окно Регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <h2>Оставить отзыв</h2>
+            @Html.ValidationSummary(true)
+
+            <form asp-action="CreateClient" asp-controller="Client" method="post">
+                <label>Имя</label><br>
+                <input type="text" asp-for="Name"><br><br>
+                @Html.ValidationMessageFor(x => x.Name)
+
+                <label>Ваш отзыв:</label><br>
+                <input type="text" asp-for="Description"><br><br>
+                @Html.ValidationMessageFor(x => x.Description)
+
+                <button type="submit">Оставить отзыв</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

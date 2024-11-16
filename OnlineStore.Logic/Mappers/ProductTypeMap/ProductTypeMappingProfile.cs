@@ -12,11 +12,15 @@ namespace OnlineStrore.Logic.Mappers.ProductTypeMap
         {
             CreateMap<ProductType, ProductTypeVm>()
                 .ForMember(t => t.Name,
-                src => src.MapFrom(src => src.Name));
+                src => src.MapFrom(src => src.Name))
+                .ForMember(t => t.Id,
+                src => src.MapFrom(src => src.Id));
 
             CreateMap<ProductType, ProductTypeLookUpDto>()
                 .ForMember(t => t.Id,
-                src => src.MapFrom(src => src.Id)); 
+                src => src.MapFrom(src => src.Id))
+                .ForMember(t => t.Name,
+                src => src.MapFrom(t => t.Name)); 
         }
     }
 }

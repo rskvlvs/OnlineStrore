@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
+using OnlineStore.Storage.MS_SQL.Entities;
 
 namespace OnlineStore.Storage.MS_SQL
 {
@@ -10,14 +11,11 @@ namespace OnlineStore.Storage.MS_SQL
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
         //public DbSet<ProductToSales> ProductToSales { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            modelBuilder.Entity<Manager>()
-                .HasIndex(manager => manager.Email).IsUnique(true);
 
             modelBuilder.Entity<Client>()
                 .HasMany(c => c.Sales)

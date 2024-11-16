@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - СТОЛПЛИТ</title>
+
+    <!-- Подключаем стили -->
+    <link href="@Url.Content("~/css/styles.css")" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    @Html.Partial("~/Views/Shared/header.cshtml")
+
+    <!-- Навигационная панель -->
+    @Html.Partial("~/Views/Shared/navbar.cshtml")
+
+    <!-- Основной контент страницы -->
+    <div class="main-content">
+        <!-- Навигационная панель -->
+        @Html.Partial("~/Views/Shared/sidebar.cshtml")
+        <div class="content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- Футер сайта -->
+    @Html.Partial("~/Views/Shared/footer.cshtml")
+
+    <!-- Подключение JavaScript файлов -->
+    <script src="~/js/scripts.js"></script>
+</body>
+</html>

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStrore", "OnlineStror
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Storage.MS_SQL", "OnlineStore.Storage.MS_SQL\OnlineStore.Storage.MS_SQL.csproj", "{F2BD8915-FCF2-4052-8DED-9D80061D5A72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Logic", "OnlineStore.Logic\OnlineStore.Logic.csproj", "{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Logic", "OnlineStore.Logic\OnlineStore.Logic.csproj", "{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
