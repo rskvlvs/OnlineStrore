@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using OnlineStrore.ViewModels
+<!DOCTYPE html>
+@* @model ClientView *@
+
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +13,38 @@
 </head>
 <body>
     <!-- Шапка сайта -->
-    @Html.Partial("~/Views/Shared/header.cshtml")
+   @*  @(ViewData["clientName"] = ViewData["clientName"])
+    @Html.Partial("~/Views/Shared/header.cshtml"); *@
+    <header>
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="left">
+                    <img src="~/images/Столплит-новый-лого.jpg" alt="ЛОГОТИП" height="120">
+                </td>
+                <td align="left">
+                    <h1>СТОЛПЛИТ</h1>
+                </td>
+                @if (ViewData["clientName"] == null)
+                {
+                    <td>
+                        <button><a href="@Url.Action("Login", "Client")"> Войти</a></button>
+                        <button><a href="@Url.Action("Create", "Client")"> Регистрация</a></button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <h2>@ViewData["clientName"].ToString()</h2>
+                    </td>
+                    <td>
+                        <button><a href="@Url.Action("Logout", "Client")"> Выйти</a></button>
+                        <button><a href="@Url.Action("Basket", "Client")"> Корзина</a></button>
+                        <button><a href="@Url.Action("Feedback", "Client")">Оставить отзыв</a></button>
+                    </td>
+                }
+            </tr>
+        </table>
+    </header>
 
     <!-- Навигационная панель -->
     @Html.Partial("~/Views/Shared/navbar.cshtml")

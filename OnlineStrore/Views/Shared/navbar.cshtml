@@ -1,9 +1,9 @@
 ﻿<!-- Навигация -->
 <nav>
-    <a href="~/Views/Product/kitchen.cshtml">Кухни</a>
-    <a href="~/Views/Product/closet.cshtml">Шкафы</a>
-    <a href="#">Диваны</a>
-    <a href="#">Кровати</a>
+    <a href="@Url.Action("Catalog", "Product", new{TypeName = "Кухни"})">Кухни</a>
+    <a href="@Url.Action("Catalog", "Product", new{TypeName = "Шкафы"})">Шкафы</a>
+    <a href="@Url.Action("Catalog", "Product", new{TypeName = "Диваны"})">Диваны</a>
+    <a href="@Url.Action("Catalog", "Product", new{TypeName = "Кровати"})">Кровати</a>
     <span class="search-bar">
         <input type="text" id="search-input" placeholder="Поиск...">
         <input type="button" value="Поиск" onclick="searchFunction()">

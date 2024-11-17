@@ -72,6 +72,10 @@ header {
         color: #fff;
         margin: 0;
     }
+    header h2 {
+        color: #fff;
+        margin: 0;
+    }
 
 /* Меню навигации */
 nav {
@@ -166,6 +170,7 @@ input[type="Password"] {
     border: 1px solid #ccc; /* Цвет границы */
     border-radius: 5px; /* Закругленные углы */
 }
+
 
 
 /* Стили для чекбоксов */
@@ -321,3 +326,13 @@ textarea {
     padding: 10px;
     font-size: 16px;
 }
+
+.catalog-flex{
+    display : flex;
+    flex-wrap : wrap;
+    justify-content : space-between; 
+}
+
+/*.catalog-flex div{
+    width : 400px;
+}*/

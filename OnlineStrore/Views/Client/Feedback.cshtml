@@ -12,19 +12,19 @@
     <link href="@Url.Content("~/css/styles.css")" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <!-- Модальное окно Регистрации -->
-    <div id="registerModal" class="modal">
+    <div id="feedbackModal" class="modal">
         <div class="modal-content">
             <h2>Оставить отзыв</h2>
             @Html.ValidationSummary(true)
 
-            <form asp-action="CreateClient" asp-controller="Client" method="post">
+            <form asp-action="ClientFeedback" asp-controller="Client" method="post">
                 <label>Имя</label><br>
                 <input type="text" asp-for="Name"><br><br>
                 @Html.ValidationMessageFor(x => x.Name)
 
                 <label>Ваш отзыв:</label><br>
-                <input type="text" asp-for="Description"><br><br>
+                <textarea asp-for="Description" rows="6" style="width:100%"></textarea>
+                @* <input type="text" asp-for="Description"><br><br> *@
                 @Html.ValidationMessageFor(x => x.Description)
 
                 <button type="submit">Оставить отзыв</button>

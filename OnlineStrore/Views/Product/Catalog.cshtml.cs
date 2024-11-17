@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace OnlineStrore.Views.Shared
+namespace OnlineStrore.Views.Product
 {
-    public class headerModel : PageModel
+    public class CatalogModel : PageModel
     {
         public void OnGet()
         {

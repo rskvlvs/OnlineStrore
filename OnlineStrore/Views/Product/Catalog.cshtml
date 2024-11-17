@@ -1,0 +1,33 @@
+﻿@using OnlineStrore.Logic.Queries.Product.GetProductList
+
+
+@model ProductListVm
+@{
+    Layout = "~/Views/Layout.cshtml";
+}
+
+<div class="content">
+    <h1 align="center">Наши товары</h1>
+    <p>Выберите товар, который вас интересует, и перейдите на страницу с подробным описанием.</p>
+
+    <!-- Выводим товары в виде таблицы -->
+    @* <table align="center" cellpadding="10"> *@
+        <div class="catalog-flex">
+            @foreach (var product in Model.Products)
+            {
+                <div>
+                    <!-- Ссылка на страницу с полным описанием товара -->
+                    <a href="@Url.Action("Details", "Product", new {id = product.Id})">
+                        <!-- Картинка товара -->
+                        <img src="@Url.Content(product.ImageUrl)" alt="@product.Name" width="400" height="300">
+                    </a>
+                    <!-- Цена и название товара -->
+                    <p>
+                        <b>@product.Cost.ToString() р</b><br>
+                        <i>@product.Name</i>
+                    </p>
+                </div>
+            }
+        </div>
+    @* </table> *@
+</div>

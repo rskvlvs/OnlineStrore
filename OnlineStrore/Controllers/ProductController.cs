@@ -11,7 +11,7 @@ namespace OnlineStrore.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductController : Controller
     {
         private readonly IMediator mediator;
 
@@ -34,14 +34,6 @@ namespace OnlineStrore.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ProductVm>> GetProduct(Guid id, CancellationToken cancellationToken)
-        {
-            var query = new GetProductQuery() { Id = id};
-            var product = await mediator.Send(query, cancellationToken);
-            return Ok(product);
-        }
-
         [HttpPatch("{id}")]
         public async Task<ActionResult<Guid>> UpdateProduct(Guid id, UpdateProductDto productDto, CancellationToken cancellationToken)
         {
@@ -61,6 +53,28 @@ namespace OnlineStrore.Controllers
         {
             await mediator.Send(request, cancellationToken);
             return Ok("Product has been deleted!");
+        }
+
+        [HttpGet("Catalog")]
+        public async Task<ActionResult> Catalog(string TypeName, CancellationToken cancellationToken)
+        {
+            var query = new GetProductListQuery() { ProductTypeName = TypeName };
+            var catalog = await mediator.Send(query, cancellationToken);
+
+            var name = HttpContext.User.FindFirst("clientName")?.Value;
+            ViewData["clientName"] = name;
+            return View(catalog);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Details(Guid id, CancellationToken cancellationToken)
+        {
+            var request = new GetProductQuery() { Id = id };
+            var product = await mediator.Send(request, cancellationToken);
+            var name = HttpContext.User.FindFirst("clientName")?.Value;
+            ViewData["clientName"] = name;
+
+            return View(product);
         }
     }
 }

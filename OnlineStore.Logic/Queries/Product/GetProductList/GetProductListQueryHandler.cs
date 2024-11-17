@@ -20,7 +20,7 @@ namespace OnlineStrore.Logic.Queries.Product.GetProductList
 
         public async Task<ProductListVm> Handle(GetProductListQuery request, CancellationToken cancellationToken)
         {
-            var products = await productRepository.GetAllProductsAsync(context, cancellationToken);
+            var products = await productRepository.GetAllProductsByTypeAsync(context, request.ProductTypeName, cancellationToken);
 
             var productDtos = mapper.Map<List<ProductLookUpDto>>(products);
             return new ProductListVm { Products = productDtos };

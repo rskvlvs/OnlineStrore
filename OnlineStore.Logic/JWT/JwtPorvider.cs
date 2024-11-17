@@ -18,7 +18,7 @@ namespace OnlineStore.Logic.JWT
 
         public string GenerateToken(Client client)
         {
-            Claim[] claims = [new("clientId", client.Id.ToString())];
+            Claim[] claims = [new("clientName", client.Name), new("clientId", client.Id.ToString())];
 
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
