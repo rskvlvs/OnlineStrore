@@ -3,6 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStrore.Logic.Queries.Client.GetClient;
+using OnlineStrore.Logic.Queries.Product.GetProduct;
+using OnlineStrore.Logic.Queries.Product.GetProductList;
+using OnlineStrore.ViewModels;
 
 
 namespace OnlineStrore.Controllers
@@ -15,42 +18,50 @@ namespace OnlineStrore.Controllers
 
         public HomeController(IMediator mediator)
         {
-
             this.mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index(bool isAuthorize = false)
+        public async Task<ActionResult> Index()
         {
-            ViewBag.IsUserLoggedIn = isAuthorize;
+            //var name = HttpContext.User.FindFirst("clientName")?.Value;
+            //return View(new ClientView() { Name = name});
+            var name = HttpContext.User.FindFirst("clientName")?.Value;
+            ViewData["clientName"] = name;
             return View();
         }
 
         [HttpGet("Sale")]
-        public async Task<ActionResult> Sale(bool isAuthorize = false)
+        public async Task<ActionResult> Sale()
         {
-            ViewBag.IsUserLoggedIn = isAuthorize;
+            //var name = HttpContext.User.FindFirst("clientName")?.Value;
+            //return View(new ClientView() { Name = name });
+            var name = HttpContext.User.FindFirst("clientName")?.Value;
+            ViewData["clientName"] = name;
             return View();
         }
 
         [HttpGet("News")]
-        public async Task<ActionResult> News(bool isAuthorize = false)
+        public async Task<ActionResult> News()
         {
-            ViewBag.IsUserLoggedIn = isAuthorize;
+            //var name = HttpContext.User.FindFirst("clientName")?.Value;
+            //return View(new ClientView() { Name = name });
+            var name = HttpContext.User.FindFirst("clientName")?.Value;
+            ViewData["clientName"] = name;
             return View();
         }
 
         [HttpGet("Contact")]
-        public async Task<ActionResult> Contact(bool isAuthorize = false)
+        public async Task<ActionResult> Contact()
         {
-            ViewBag.IsUserLoggedIn = isAuthorize;
-
+            //var name = HttpContext.User.FindFirst("clientName")?.Value;
+            //return View(new ClientView() { Name = name });
+            var name = HttpContext.User.FindFirst("clientName")?.Value;
+            ViewData["clientName"] = name;
             return View();
         }
 
-        public bool IsUserLoggedIn()
-        {
-            return HttpContext.Request.Cookies.ContainsKey("tasty-cookies");
-        }
+        
+
     }
 }

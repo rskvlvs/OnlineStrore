@@ -33,7 +33,7 @@ namespace OnlineStrore.Controllers
                 var token = await mediator.Send(request, cancellationToken);
                 HttpContext.Response.Cookies.Append("tasty-cookies", token);
 
-                return RedirectToAction(nameof(HomeController.Index), "Home", new { isAuthorize = true });
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             catch (ValidationException ex)
             {
@@ -60,8 +60,7 @@ namespace OnlineStrore.Controllers
                 var token = await mediator.Send(request, cancellationToken);
                 HttpContext.Response.Cookies.Append("tasty-cookies", token);
 
-
-                return RedirectToAction(nameof(HomeController.Index), "Home", new { isAuthorize = true });
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             catch(ValidationException ex)
             {
@@ -72,7 +71,6 @@ namespace OnlineStrore.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         [HttpGet("Login")]
@@ -165,8 +163,15 @@ namespace OnlineStrore.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        [HttpPost("Feedback")]
-        public async Task<ActionResult> CreateFeedback([FromForm]CreateFeedbackCommand request,  CancellationToken cancellationToken)
+        [Authorize]
+        [HttpGet("Feedback")]
+        public async Task<IActionResult> Feedback()
+        {
+            return View(); 
+        }
+
+        [HttpPost("ClientFeedback")]
+        public async Task<ActionResult> CreateFeedback([FromForm]CreateFeedbackCommand request, CancellationToken cancellationToken)
         {
             await mediator.Send(request, cancellationToken);
             return RedirectToAction(nameof(HomeController.Index), "Home"); 

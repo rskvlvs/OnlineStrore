@@ -12,6 +12,8 @@ namespace OnlineStore.Storage.MS_SQL
         
         public string Characteristics {  get; set; }
 
+        public string ImageUrl { get; set; }
+
         public uint CountOfProduct { get; set; } = 0;
 
         public Guid ProductTypeId { get; set; }

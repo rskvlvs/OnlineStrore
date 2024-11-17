@@ -11,6 +11,8 @@ namespace OnlineStrore.Logic.Repositories.Interfaces
     {
         Task<IEnumerable<Product>> GetAllProductsAsync(IContext context, CancellationToken cancellationToken);
 
+        Task<IEnumerable<Product>> GetAllProductsByTypeAsync(IContext context, string TypeName, CancellationToken cancellationToken);
+
         Task<Product> GetProductAsync(IContext context, Guid id, CancellationToken cancellationToken);
 
         Task<Guid> CreateProductAsync(IContext context, CreateProductCommand request, CancellationToken cancellationToken);

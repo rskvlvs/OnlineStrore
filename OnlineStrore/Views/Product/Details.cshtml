@@ -1,0 +1,16 @@
+﻿@using OnlineStrore.Logic.Queries.Product.GetProduct
+
+@model ProductVm
+@{
+    Layout = "~/Views/Layout.cshtml";
+}
+
+<div class="content">
+    <h1>@Model.Name</h1>
+    <div class="product-details">
+        <img src="@Url.Content(Model.ImageUrl)" alt="@Model.Name" width="600" height="450">
+        <p><b>Цена: @Model.Cost.ToString() р</b></p>
+        <p><b>Характеристики:</b><br>@Model.Characteristics</p>
+        <p><b>Количество в наличии:</b> @Model.CountOfProduct</p>
+    </div>
+</div>

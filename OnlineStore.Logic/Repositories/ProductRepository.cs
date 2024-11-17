@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OnlineStore.Storage.MS_SQL;
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using OnlineStrore.Logic.Commands.Product.Create;
 using OnlineStrore.Logic.Commands.Product.Update;
 using OnlineStrore.Logic.Exceptions;
+using OnlineStrore.Logic.Queries.ProductType.GetProductType;
 using OnlineStrore.Logic.Repositories.Interfaces;
 
 namespace OnlineStrore.Logic.Repositories
@@ -40,7 +42,20 @@ namespace OnlineStrore.Logic.Repositories
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync(IContext context, CancellationToken cancellationToken)
         {
-            var products = await context.Products.Include(p => p.ProductType.Name).ToListAsync(cancellationToken);
+            var products = await context.Products.Include(p => p.ProductType).ToListAsync(cancellationToken);
+            if (products.Count == 0)
+                throw new NotFoundException();
+            return products;
+        }
+
+        public async Task<IEnumerable<Product>> GetAllProductsByTypeAsync(IContext context, string TypeName, CancellationToken cancellationToken)
+        {
+            var type= await context.ProductTypes.FirstOrDefaultAsync(t => t.Name == TypeName);
+            if (type == null)
+            {
+                throw new NotFoundException();
+            }
+            var products = await context.Products.Where(p => p.ProductTypeId == type.Id).Include(p => p.ProductType).ToListAsync(cancellationToken);
             if (products.Count == 0)
                 throw new NotFoundException();
             return products;

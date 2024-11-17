@@ -20,7 +20,9 @@ namespace OnlineStrore.Logic.Mappers.ProductMap
                 .ForMember(p => p.ProductTypeName,
                 src => src.MapFrom(src => src.ProductType.Name))
                 .ForMember(p => p.Characteristics, 
-                src => src.MapFrom(p => p.Characteristics));
+                src => src.MapFrom(p => p.Characteristics))
+                .ForMember(p => p.ImageUrl,
+                src => src.MapFrom(p => p.ImageUrl));
 
             CreateMap<Product, ProductLookUpDto>()
                 .ForMember(p => p.Id,
@@ -34,7 +36,9 @@ namespace OnlineStrore.Logic.Mappers.ProductMap
                 .ForMember(p => p.CountOfProduct,
                 src => src.MapFrom(src => src.CountOfProduct))
                 .ForMember(p => p.ProductTypeName,
-                src => src.MapFrom(src => src.ProductType.Name));
+                src => src.MapFrom(src => src.ProductType.Name))
+                .ForMember(p => p.ImageUrl,
+                src => src.MapFrom(p => p.ImageUrl));
 
         }
     }

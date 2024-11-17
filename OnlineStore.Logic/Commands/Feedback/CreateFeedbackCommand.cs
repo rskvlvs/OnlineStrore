@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using OnlineStore.Logic.Repositories.Interfaces;
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using System;
 using System.Collections.Generic;
