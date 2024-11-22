@@ -1,9 +1,9 @@
-﻿@using OnlineStore.Logic.Commands.Client.Login
-@using OnlineStrore.Controllers
+﻿@using OnlineStrore.Controllers
+@using OnlineStrore.Dto
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <!--Вход-->
-@model LoginClientCommand
+@model LoginClientDto
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,11 +19,11 @@
             @Html.ValidationSummary(true)
             <form asp-action="LoginClient" asp-controller="Client" method="post">
                 <label>Email</label>
-                <input type="email" asp-for="Email" />
+                <input type="email" asp-for="Email" required />
                 @Html.ValidationMessageFor(x => x.Email)
 
                 <label>Пароль</label>
-                <input type="Password" asp-for="Password" />
+                <input type="Password" asp-for="Password" required />
                 @Html.ValidationMessageFor(x => x.Password)
 
                 <button type="submit">Войти</button>

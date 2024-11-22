@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace OnlineStrore.Middleware
 {
@@ -13,6 +14,7 @@ namespace OnlineStrore.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
+
             try
             {
                 await _next(context);
@@ -25,6 +27,7 @@ namespace OnlineStrore.Middleware
                     Errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
                 });
             }
+
         }
     }
 }

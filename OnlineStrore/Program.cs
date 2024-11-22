@@ -1,6 +1,9 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using OnlineStore.Logic.Commands.Client.Login;
 using OnlineStore.Logic.JWT;
 using OnlineStore.Storage.MS_SQL;
 using OnlineStrore.Extensions;
@@ -14,6 +17,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureCors();
 
 builder.Services.AddControllersWithViews();
+
+//builder.Services.AddControllersWithViews().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginClientCommandValidator>());
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 //builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -52,6 +58,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+//builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddWebServices();
 
 
@@ -70,6 +78,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//Временно убрал для релизации моделстэйт
 app.UseMiddleware<ValidationExceptionMiddleware>();
 
 app.UseCors();
@@ -80,7 +89,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();
-
 
 app.MapControllers();
 app.MapControllerRoute(

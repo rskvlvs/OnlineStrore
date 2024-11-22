@@ -56,6 +56,7 @@ namespace OnlineStrore.Controllers
         }
 
         [HttpGet("Catalog")]
+        [ResponseCache(Duration = 60)]
         public async Task<ActionResult> Catalog(string TypeName, CancellationToken cancellationToken)
         {
             var query = new GetProductListQuery() { ProductTypeName = TypeName };
