@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
 using OnlineStore.Logic.Auth.Hasher;
 using OnlineStore.Logic.Commands.Client.Login;
 using OnlineStore.Logic.JWT;
@@ -23,7 +24,7 @@ namespace OnlineStrore.Logic.Repositories
         public async Task<string> CreateClientAsync(IContext context, CreateClientCommand request, CancellationToken cancellationToken)
         {
             if (await context.Clients.FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken) != null)
-                throw new AlreadyCreatedException(request.Email);
+                throw new ValidationException("Client with this Email has already been created");
             Guid id = Guid.NewGuid();
             var hashedpassword = passwordHasher.Generate(request.Password);
             var client = new Client()
@@ -37,7 +38,7 @@ namespace OnlineStrore.Logic.Repositories
             await context.Clients.AddAsync(client, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
             var token = jwtProvider.GenerateToken(client);
-
+            
             return token;
         }
 

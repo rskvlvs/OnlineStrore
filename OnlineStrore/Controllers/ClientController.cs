@@ -26,10 +26,27 @@ namespace OnlineStrore.Controllers
         }
 
         [HttpPost("CreateClient")]
-        public async Task<IActionResult> CreateClient([FromForm]CreateClientCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateClient([FromForm]CreateClientDto createClientDto, CancellationToken cancellationToken)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Register", new CreateClientDto());
+            }
+            if(createClientDto.Password != createClientDto.ConnfigurePasswrod)
+            {
+                ModelState.AddModelError(string.Empty, "Passwords must be equal");
+                return View("Register", new CreateClientDto());
+            }
             try
             {
+                var request = new CreateClientCommand()
+                {
+                    Name = createClientDto.Name,
+                    Email = createClientDto.Email,
+                    Password = createClientDto.Password,
+                    ConnfigurePasswrod = createClientDto.ConnfigurePasswrod,
+                    PhoneNubmer = createClientDto.PhoneNubmer
+                };
                 var token = await mediator.Send(request, cancellationToken);
                 HttpContext.Response.Cookies.Append("tasty-cookies", token);
 
@@ -38,7 +55,7 @@ namespace OnlineStrore.Controllers
             catch (ValidationException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return View("Create" ,new CreateClientCommand());
+                return View("Register", new CreateClientDto());
             }
             catch (Exception ex)
             {
@@ -49,14 +66,24 @@ namespace OnlineStrore.Controllers
         [HttpGet("Create")]
         public async Task<IActionResult> RegisterView()
         {
-            return View("Register", new CreateClientCommand()); 
+            return View("Register", new CreateClientDto()); 
         }
 
         [HttpPost("LoginClient")]
-        public async Task<ActionResult> LoginClient([FromForm]LoginClientCommand request, CancellationToken cancellationToken)
+        [ResponseCache(Duration = 60)]
+        public async Task<ActionResult> LoginClient([FromForm]LoginClientDto loginDto, CancellationToken cancellationToken)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Login", new LoginClientDto());
+            }
             try
             {
+                var request = new LoginClientCommand()
+                {
+                    Email = loginDto.Email,
+                    Password = loginDto.Password,
+                };
                 var token = await mediator.Send(request, cancellationToken);
                 HttpContext.Response.Cookies.Append("tasty-cookies", token);
 
@@ -65,7 +92,7 @@ namespace OnlineStrore.Controllers
             catch(ValidationException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return View("Login", new LoginClientCommand());
+                return View("Login", new LoginClientDto());
             }
             catch(Exception ex)
             {
@@ -74,9 +101,9 @@ namespace OnlineStrore.Controllers
         }
 
         [HttpGet("Login")]
-        public async Task<ActionResult<string>> loginView()
+        public async Task<IActionResult> loginView()
         {
-            return View("Login", new LoginClientCommand());
+            return View("Login", new LoginClientDto());
         }
 
 
@@ -109,6 +136,8 @@ namespace OnlineStrore.Controllers
 
         [Authorize]
         [HttpGet("clientInfo")]
+        [ResponseCache(Duration = 60)]
+
         public async Task<ActionResult<ClientVm>> GetClient(CancellationToken cancellationToken)
         {
             bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
@@ -167,12 +196,18 @@ namespace OnlineStrore.Controllers
         [HttpGet("Feedback")]
         public async Task<IActionResult> Feedback()
         {
-            return View(); 
+            return View(new CreateFeedbackDto()); 
         }
 
         [HttpPost("ClientFeedback")]
-        public async Task<ActionResult> CreateFeedback([FromForm]CreateFeedbackCommand request, CancellationToken cancellationToken)
+        public async Task<ActionResult> CreateFeedback([FromForm] CreateFeedbackDto feedbackDto, CancellationToken cancellationToken)
         {
+            var request = new CreateFeedbackCommand()
+            {
+                Name = HttpContext.User.FindFirst("clientName")?.Value,
+                Description = feedbackDto.Description
+            };
+
             await mediator.Send(request, cancellationToken);
             return RedirectToAction(nameof(HomeController.Index), "Home"); 
         }

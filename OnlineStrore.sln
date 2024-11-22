@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Storage.MS_SQL"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Logic", "OnlineStore.Logic\OnlineStore.Logic.csproj", "{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreTests", "OnlineStoreTests\OnlineStoreTests.csproj", "{A59F8110-921D-455C-BB74-31E0FDEF6944}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1501F783-E0D5-40FE-BB4F-AE383EF18EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59F8110-921D-455C-BB74-31E0FDEF6944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59F8110-921D-455C-BB74-31E0FDEF6944}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59F8110-921D-455C-BB74-31E0FDEF6944}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59F8110-921D-455C-BB74-31E0FDEF6944}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
