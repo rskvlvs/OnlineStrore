@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OnlineStore.Storage.MS_SQL;
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
-using OnlineStrore.Logic.Commands.Product.Create;
-using OnlineStrore.Logic.Commands.Product.Update;
+using OnlineStrore.Logic.Commands.ProductNamespace.Create;
+using OnlineStrore.Logic.Commands.ProductNamespace.Update;
 using OnlineStrore.Logic.Exceptions;
 using OnlineStrore.Logic.Queries.ProductType.GetProductType;
 using OnlineStrore.Logic.Repositories.Interfaces;

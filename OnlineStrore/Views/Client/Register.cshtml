@@ -1,4 +1,4 @@
-﻿@using OnlineStrore.Dto
+﻿﻿@using OnlineStrore.Dto
 <!-- Модальное окно регистрации -->
 @model CreateClientDto
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -13,7 +13,7 @@
 </head>
 <body>
     <!-- Модальное окно Регистрации -->
-    <div id="registerModal" class="modal">
+    <div id="registerModal" class="modal-reg">
         <div class="modal-content">
             <h2>Регистрация</h2>
             @Html.ValidationSummary(true)
@@ -45,12 +45,11 @@
                 <input type="checkbox" id="privacy" name="privacy" required>
                 <label for="privacy">
                     Я ознакомлен и согласен с условиями
-                    <a href="https://www.stolplit.ru/actions/politics/" target="_blank">политики конфиденциальности</a> и даю согласие на обработку
-                    <a href="https://www.stolplit.ru/upload/medialibrary/f8e/t9alygngpdj4633lzr51mj7o65l9dydd/privacy_policy_stolplit.pdf" target="_blank">персональных данных</a>
+                    <a href="https://www.stolplit.ru/upload/medialibrary/f8e/t9alygngpdj4633lzr51mj7o65l9dydd/privacy_policy_stolplit.pdf" target="_blank">политики конфиденциальности</a> и даю согласие на обработку
+                    персональных данных.
                 </label><br><br>
                 <button type="submit">Зарегистрироваться</button>
             </form>
         </div>
     </div>
 </body>
-</html>

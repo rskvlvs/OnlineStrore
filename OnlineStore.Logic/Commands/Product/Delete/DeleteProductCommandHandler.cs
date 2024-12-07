@@ -2,7 +2,7 @@
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using OnlineStrore.Logic.Repositories.Interfaces;
 
-namespace OnlineStrore.Logic.Commands.Product.Delete
+namespace OnlineStrore.Logic.Commands.ProductNamespace.Delete
 {
     public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand>
     {

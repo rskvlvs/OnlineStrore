@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Storage.MS_SQL;
 
@@ -11,9 +12,11 @@ using OnlineStore.Storage.MS_SQL;
 namespace OnlineStore.Storage.MS_SQL.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241201114254_Added tables")]
+    partial class Addedtables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace OnlineStore.Storage.MS_SQL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CartProduct", b =>
+                {
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CartId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("CartToProducts", (string)null);
+                });
 
             modelBuilder.Entity("OnlineStore.Storage.MS_SQL.Client", b =>
                 {
@@ -68,24 +86,6 @@ namespace OnlineStore.Storage.MS_SQL.Migrations
                     b.HasIndex("ClientId");
 
                     b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("OnlineStore.Storage.MS_SQL.Entities.CartToProduct", b =>
-                {
-                    b.Property<Guid>("CartId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ProductCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CartToProducts");
                 });
 
             modelBuilder.Entity("OnlineStore.Storage.MS_SQL.Entities.Feedback", b =>
@@ -216,18 +216,7 @@ namespace OnlineStore.Storage.MS_SQL.Migrations
                     b.ToTable("ProductsToSales", (string)null);
                 });
 
-            modelBuilder.Entity("OnlineStore.Storage.MS_SQL.Entities.Cart", b =>
-                {
-                    b.HasOne("OnlineStore.Storage.MS_SQL.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("OnlineStore.Storage.MS_SQL.Entities.CartToProduct", b =>
+            modelBuilder.Entity("CartProduct", b =>
                 {
                     b.HasOne("OnlineStore.Storage.MS_SQL.Entities.Cart", null)
                         .WithMany()
@@ -237,9 +226,20 @@ namespace OnlineStore.Storage.MS_SQL.Migrations
 
                     b.HasOne("OnlineStore.Storage.MS_SQL.Product", null)
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("OnlineStore.Storage.MS_SQL.Entities.Cart", b =>
+                {
+                    b.HasOne("OnlineStore.Storage.MS_SQL.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("OnlineStore.Storage.MS_SQL.Product", b =>

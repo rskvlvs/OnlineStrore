@@ -1,151 +1,249 @@
-// Кнопки для открытия страниц
-const openLoginModalBtn = document.getElementById("openLoginModal");
-const openRegisterModalBtn = document.getElementById("openRegisterModal");
-const openFeedbackModalBtn = document.getElementById("openFeedbackModal");
+п»ї
+//Р”Р»СЏ РєРѕСЂР·РёРЅС‹
+async function updateCartCount() {
+    try {
+        const response = await fetch('/Cart/GetCartCount', { method: 'GET' });
 
-// Функция для открытия страницы входа
-openLoginModalBtn.onclick = function () {
-    window.location.href = "/Client/Login";  // Переход на страницу входа
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РѕС‚РІРµС‚ СѓСЃРїРµС€РЅС‹Р№
+        if (response.ok) {
+            // РџРѕР»СѓС‡Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ РІ РєРѕСЂР·РёРЅРµ
+            const count = await response.json();
+
+            // РћР±РЅРѕРІР»СЏРµРј РѕС‚РѕР±СЂР°Р¶Р°РµРјРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІ СЌР»РµРјРµРЅС‚Рµ СЃ id 'cart-count'
+            document.getElementById('cart-count').textContent = count;
+        } else {
+            console.error('РћС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРё РєРѕР»РёС‡РµСЃС‚РІР° С‚РѕРІР°СЂРѕРІ РІ РєРѕСЂР·РёРЅРµ');
+        }
+    } catch (error) {
+        console.error('РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°:', error);
+    }
 }
 
-// Функция для открытия страницы регистрации
-openRegisterModalBtn.onclick = function () {
-    window.location.href = "/Client/Register";  // Переход на страницу регистрации
+// РћР±РЅРѕРІР»СЏРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ РїСЂРё Р·Р°РіСЂСѓР·РєРµ СЃС‚СЂР°РЅРёС†С‹
+document.addEventListener('DOMContentLoaded', function () {
+    if (document.cookie.includes('tasty-cookies')) {
+        // Р•СЃР»Рё РєР»РёРµРЅС‚ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ, РІС‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ updateCartCount
+        updateCartCount();
+    }
+});
+function addToCart(productId) {
+    fetch('/Cart/add', {
+        method: 'Post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productId)
+    }).then(response => {
+        if (response.ok) {
+            alert('РўРѕРІР°СЂ РґРѕР±Р°РІР»РµРЅ РІ РєРѕСЂР·РёРЅСѓ');
+            updateCartCount(); // РћР±РЅРѕРІР»СЏРµРј СЃС‡РµС‚С‡РёРє РєРѕСЂР·РёРЅС‹
+        } else {
+            alert('РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё С‚РѕРІР°СЂР°');
+        }
+    });
 }
 
-// Функция для открытия страницы отзыва
-openFeedbackModalBtn.onclick = function () {
-    window.location.href = "/Client/Feedback";  // Переход на страницу отзыва
-}
-
-
-//отправка запроса на сервер
-//async function login() {
-//    const email = document.getElementById("loginEmail").value;
-//    const password = document.getElementById("loginPassword").value;
-
-//    const response = await fetch('https://localhost:7291/Client/login', {
-//        method: 'POST',
-//        headers: { 'Content-Type': 'application/json' },
-//        body: JSON.stringify({ email, password })
-//    });
-
-//    if (response.ok) {
-//        alert("Вы успешно вошли!");
-//        loginModal.style.display = "none";
-//    } else {
-//        alert("Ошибка входа: проверьте данные");
-//    }
-//}
-//async function register() {
-//    const name = document.getElementById("registerName").value;
-//    const email = document.getElementById("registerEmail").value;
-//    const phoneNumber = document.getElementById("registerNumber").value;
-//    const password = document.getElementById("registerPassword").value;
-//    const confirmPassword = document.getElementById("confirmPassword").value;
-
-//    if (password !== confirmPassword) {
-//        event.preventDefault(); // Останавливаем отправку формы
-//        alert("Пароли не совпадают. Пожалуйста, проверьте введенные данные.");
-//    }
-
-//    const response = await fetch('https://localhost:7291/Client/create', {
-//        method: 'POST',
-//        headers: { 'Content-Type': 'application/json' },
-//        body: JSON.stringify({ name, email, phoneNumber, password })
-//    });
-
-//    if (response.ok) {
-//        alert("Регистрация прошла успешно!");
-//        registerModal.style.display = "none";
-//    } else {
-//        alert("Ошибка регистрации: проверьте данные");
-//    }
-//}
-
-//Функция поиска
+//Р¤СѓРЅРєС†РёСЏ РїРѕРёСЃРєР°
 function searchFunction() {
     const input = document.getElementById('search-input');
     const searchText = input.value;
 
-    // Если поле пустое, не производим поиск
+    // Р•СЃР»Рё РїРѕР»Рµ РїСѓСЃС‚РѕРµ, РЅРµ РїСЂРѕРёР·РІРѕРґРёРј РїРѕРёСЃРє
     if (searchText === "") {
-        alert("Введите текст для поиска.");
+        alert("Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚ РґР»СЏ РїРѕРёСЃРєР°.");
         return;
     }
 
-    // Вызов встроенной функции поиска браузера
+    // Р’С‹Р·РѕРІ РІСЃС‚СЂРѕРµРЅРЅРѕР№ С„СѓРЅРєС†РёРё РїРѕРёСЃРєР° Р±СЂР°СѓР·РµСЂР°
     const found = window.find(searchText);
 
-    // Если текст не найден, выводим сообщение
+    // Р•СЃР»Рё С‚РµРєСЃС‚ РЅРµ РЅР°Р№РґРµРЅ, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ
     if (!found) {
-        alert("Совпадений не найдено.");
+        alert("РЎРѕРІРїР°РґРµРЅРёР№ РЅРµ РЅР°Р№РґРµРЅРѕ.");
     }
 }
 
-
-// Открытие и закрытие модального окна Отзыва
-//const feedbackModal = document.getElementById("feedbackModal");
-//const openFeedbackModalBtn = document.getElementById("openFeedbackModal");
-//const closeFeedbackModalBtn = document.getElementById("closeFeedbackModal");
-
-//openFeedbackModalBtn.onclick = function () {
-//    feedbackModal.style.display = "block";
-//}
-
-//closeFeedbackModalBtn.onclick = function () {
-//    feedbackModal.style.display = "none";
-//}
-
-// Закрытие модальных окон при клике вне окна
-//window.onclick = function (event) {
-//    if (event.target == loginModal) {
-//        loginModal.style.display = "none";
-//    }
-//    if (event.target == registerModal) {
-//        registerModal.style.display = "none";
-//    }
-//    if (event.target == feedbackModal) {
-//        feedbackModal.style.display = "none";
-//    }
-//}
-
-// Функция для проверки авторизации пользователя
-async function checkUserAuthentication() {
-    try {
-        const response = await fetch('/Client/getUserName', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            displayUserName(data.name);  // Отобразим имя пользователя
-        }
-    } catch (error) {
-        console.error("Ошибка при проверке авторизации пользователя:", error);
-    }
-}
-
-// Функция для отображения имени пользователя
-function displayUserName(userName) {
-    const authSection = document.getElementById("authSection");
-    authSection.innerHTML = `<span>Добро пожаловать, ${userName}</span>
-                             <button id="logoutButton">Выйти</button>`;
-
-    // Добавляем обработчик события для кнопки выхода
-    document.getElementById("logoutButton").addEventListener("click", logout);
-}
-
-// Функция для выхода пользователя
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹С…РѕРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 async function logout() {
     try {
-        await fetch('/Client/logout', { method: 'POST' });  // Предполагается, что есть метод выхода
-        location.reload();  // Перезагружаем страницу после выхода
+        await fetch('/Client/logout', { method: 'POST' });  // РџСЂРµРґРїРѕР»Р°РіР°РµС‚СЃСЏ, С‡С‚Рѕ РµСЃС‚СЊ РјРµС‚РѕРґ РІС‹С…РѕРґР°
+        location.reload();  // РџРµСЂРµР·Р°РіСЂСѓР¶Р°РµРј СЃС‚СЂР°РЅРёС†Сѓ РїРѕСЃР»Рµ РІС‹С…РѕРґР°
     } catch (error) {
-        console.error("Ошибка при выходе:", error);
+        console.error("РћС€РёР±РєР° РїСЂРё РІС‹С…РѕРґРµ:", error);
     }
 }
 
-// Проверяем статус авторизации при загрузке страницы
-window.addEventListener("DOMContentLoaded", checkUserAuthentication);
+//РЎР»Р°Р№РґРµСЂ
+let currentIndex = 0;
+
+function showSlide(index) {
+    const slides = document.querySelector('.slides');
+    const totalSlides = slides.children.length;
+    // РћР±РЅРѕРІР»РµРЅРёРµ РёРЅРґРµРєСЃР°
+    if (index < 0) {
+        currentIndex = totalSlides - 1;
+    } else if (index >= totalSlides) {
+        currentIndex = 0;
+    } else {
+        currentIndex = index;
+    }
+
+    // РЎРјРµС‰РµРЅРёРµ СЃР»Р°Р№РґРѕРІ
+    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+}
+
+function prevSlide() {
+    showSlide(currentIndex - 1);
+}
+
+function nextSlide() {
+    showSlide(currentIndex + 1);
+}
+
+// Initialize indicators
+document.addEventListener("DOMContentLoaded", () => {
+    showSlide(currentIndex);
+});
+
+//Р”Р»СЏ РєРѕСЂР·РёРЅС‹
+function showCartModal() {
+    const cartModal = document.getElementById("cartModal");
+    cartModal.style.display = "block";
+    loadCartItems(); // Р—Р°РіСЂСѓР·РёС‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРµ РєРѕСЂР·РёРЅС‹
+}
+
+function hideCartModal() {
+    const cartModal = document.getElementById("cartModal");
+    cartModal.style.display = "none";
+}
+function loadCartItems() {
+    fetch('/Cart/GetCartItems', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`РћС€РёР±РєР° HTTP: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const cartItemsContainer = document.getElementById("cartItems");
+
+            if (!data.products || !Array.isArray(data.products)) {
+                throw new Error('Items РЅРµ СЏРІР»СЏРµС‚СЃСЏ РјР°СЃСЃРёРІРѕРј');
+            }
+
+            if (!data.products || data.products.length === 0) {
+                cartItemsContainer.innerHTML = `<div class="cartItemsEmpty">Р’Р°С€Р° РєРѕСЂР·РёРЅР° РїСѓСЃС‚Р°.</div>`;
+                return;
+            }
+
+            // РћС‡РёС‰Р°РµРј РєРѕРЅС‚РµР№РЅРµСЂ РїРµСЂРµРґ РґРѕР±Р°РІР»РµРЅРёРµРј СЌР»РµРјРµРЅС‚РѕРІ
+            cartItemsContainer.innerHTML = '';
+
+            // РСЃРїРѕР»СЊР·СѓРµРј С†РёРєР» for РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РґР°РЅРЅС‹С…
+            for (let i = 0; i < data.products.length; i++) {
+                const item = data.products[i];
+
+                const itemHtml = `
+                    <div class="cart-item">
+                        <span class="product-name">${item.productName}</span>
+                        <span class="product-quantity"> ${item.СЃountOfProduct} С€С‚.</span>
+                        <span class="product-total-price">РС‚РѕРіРѕ: ${item.СЃost * item.СЃountOfProduct} в‚Ѕ</span>                       
+                        <button class="remove-item" onclick="removeCartItem('${item.productId}')">-</button>
+                    </div>
+                `;
+
+                // Р”РѕР±Р°РІР»СЏРµРј СЌР»РµРјРµРЅС‚ РІ РєРѕРЅС‚РµР№РЅРµСЂ
+                cartItemsContainer.innerHTML += itemHtml;
+            }
+            const itemHtml = `
+                    <div class="cart-item">
+                        <span class="product-total-price">РС‚РѕРіРѕРІР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ: ${data.endCost} в‚Ѕ</span>                       
+                    </div>
+                `;
+            cartItemsContainer.innerHTML += itemHtml;
+
+        })
+        .catch(error => {
+            console.error('РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РєРѕСЂР·РёРЅС‹:', error);
+        });
+}
+
+function removeCartItem(productId) {
+    fetch('/Cart/DeleteProduct', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productId) // РџРµСЂРµРґР°РµРј С‚РѕР»СЊРєРѕ ID С‚РѕРІР°СЂР°
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('РћС€РёР±РєР° РїСЂРё СѓРґР°Р»РµРЅРёРё С‚РѕРІР°СЂР°');
+            updateCartCount();
+            loadCartItems(); // РџРµСЂРµР·Р°РіСЂСѓР¶Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ РєРѕСЂР·РёРЅС‹
+        })
+        .catch(error => {
+            console.error('РћС€РёР±РєР°:', error);
+        });
+}
+
+//РЎРЈРџР•Р  РџРћРРЎРљ РћРў Р—РЈР™РљРРќРђ
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const resultsList = document.getElementById("resultsList");
+    const clearButton = document.getElementById("clearButton");
+
+    // РџРѕРєР°Р·Р°С‚СЊ РѕРєРЅРѕ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ РїРѕРёСЃРєР°
+    searchInput.addEventListener("input", function () {
+        const query = searchInput.value.trim();
+
+        if (query.length > 0) {
+            fetch(`/Search/SearchRoute?query=${encodeURIComponent(query)}`)
+                .then(response =>  response.json())
+                .then(data => {
+                    resultsList.innerHTML = ""; // РћС‡РёСЃС‚РёС‚СЊ РїСЂРµРґС‹РґСѓС‰РёРµ СЂРµР·СѓР»СЊС‚Р°С‚С‹
+                    if (data.length > 0) {
+                        data.forEach(item => {
+                            const li = document.createElement("li");
+                            const link = document.createElement("a");
+                            link.href = item.linkText; // РСЃРїРѕР»СЊР·СѓРµРј РјР°СЂС€СЂСѓС‚ РёР· РјРѕРґРµР»Рё
+                            link.textContent = item.searchText; // РРјСЏ СЃС‚СЂР°РЅРёС†С‹
+                            li.appendChild(link);
+                            resultsList.appendChild(li);
+                        });
+                    } else {
+                        resultsList.innerHTML = "<li>Р РµР·СѓР»СЊС‚Р°С‚РѕРІ РЅРµ РЅР°Р№РґРµРЅРѕ</li>";
+                    }
+                    searchResults.style.display = "block"; // РџРѕРєР°Р·Р°С‚СЊ РѕРєРЅРѕ
+                });
+        } else {
+            searchResults.style.display = "none"; // РЎРєСЂС‹С‚СЊ РѕРєРЅРѕ, РµСЃР»Рё РЅРµС‚ С‚РµРєСЃС‚Р°
+        }
+    });
+
+    // Р—Р°РєСЂС‹С‚СЊ РѕРєРЅРѕ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ РїСЂРё РєР»РёРєРµ РІРЅРµ РѕР±Р»Р°СЃС‚Рё
+    document.addEventListener("click", function (e) {
+        if (!searchResults.contains(e.target) && e.target !== searchInput) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // РљРЅРѕРїРєР° РѕС‡РёСЃС‚РєРё РїРѕРёСЃРєР°
+    clearButton.addEventListener("click", function () {
+        searchInput.value = "";
+        resultsList.innerHTML = "";
+        searchResults.style.display = "none";
+    });
+});
+
+// Р¤СѓРЅРєС†РёСЏ СЃРєСЂС‹С‚РёСЏ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
+function hideSearchResults() {
+    const searchResults = document.getElementById("searchResults");
+    searchResults.style.display = "none";
+}

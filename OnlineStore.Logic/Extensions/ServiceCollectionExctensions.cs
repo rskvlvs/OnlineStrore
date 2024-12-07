@@ -25,6 +25,8 @@ namespace OnlineStore.Logic.Extensions
             service.AddSingleton<IProductTypeRepository, ProductTypeRepository>();
             service.AddSingleton<ISaleRepository, SaleRepository>();
             service.AddSingleton<IFeedbackRepository, FeedbackRepository>();
+            service.AddSingleton<ICartRepository, CartRepository>();
+            service.AddSingleton<IRouteEntityRepository, RouteEntityRepository>();
 
             service.AddSingleton<IPasswordHasher, PasswordHasher>();
             service.AddSingleton<IJwtPorvider, JwtPorvider>();

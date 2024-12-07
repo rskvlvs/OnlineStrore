@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStrore.Dto;
-using OnlineStrore.Logic.Commands.Product.Create;
-using OnlineStrore.Logic.Commands.Product.Delete;
-using OnlineStrore.Logic.Commands.Product.Update;
+using OnlineStrore.Logic.Commands.ProductNamespace.Create;
+using OnlineStrore.Logic.Commands.ProductNamespace.Delete;
+using OnlineStrore.Logic.Commands.ProductNamespace.Update;
 using OnlineStrore.Logic.Queries.Product.GetProduct;
 using OnlineStrore.Logic.Queries.Product.GetProductList;
 
@@ -72,9 +72,9 @@ namespace OnlineStrore.Controllers
         {
             var request = new GetProductQuery() { Id = id };
             var product = await mediator.Send(request, cancellationToken);
+
             var name = HttpContext.User.FindFirst("clientName")?.Value;
             ViewData["clientName"] = name;
-
             return View(product);
         }
     }

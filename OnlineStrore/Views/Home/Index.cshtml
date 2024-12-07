@@ -13,13 +13,38 @@
     </p>
 
     <h2>Примеры нашей работы:</h2>
-    <div class="card">
+@*     <div class="card">
         <img src="~/images/мебель.jpg" alt="Пример мебели">
     </div>
     <div class="card">
         <img src="~/images/мебель2.jpg" alt="Пример мебели 2">
     </div>
-
+ *@
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slides">
+                <div class="slide">
+                    <img src="~/images/мебель.jpg" alt="Пример мебели">
+                </div>
+                <div class="slide">
+                    <img src="~/images/мебель2.jpg" alt="Пример мебели 2">
+                </div>
+                <div class="slide">
+                <img src="~/images/new_bed_2.jpg" alt="Новая кровать 2">
+                </div>
+            </div>
+            <div class="controls">
+                <button onclick="prevSlide()">&#10094;</button>
+                <button onclick="nextSlide()">&#10095;</button>
+            </div>
+            @* <div class="indicators">
+                @for (int i = 0; i <2; i++)
+                {
+                    <button onclick="showSlide(@i)"></button>
+                }
+            </div> *@
+        </div>
+    </div>
     <h2>Наши самые популярные категории</h2>
     <table border="1" cellpadding="10" cellspacing="5">
         <tr>

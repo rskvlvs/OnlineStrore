@@ -2,6 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
+using OnlineStore.Logic.Queries.Search;
+using OnlineStore.Storage.MS_SQL.Entities;
 using OnlineStrore.Logic.Queries.Client.GetClient;
 using OnlineStrore.Logic.Queries.Product.GetProduct;
 using OnlineStrore.Logic.Queries.Product.GetProductList;
@@ -61,6 +63,7 @@ namespace OnlineStrore.Controllers
             return View();
         }
 
+      
         
 
     }

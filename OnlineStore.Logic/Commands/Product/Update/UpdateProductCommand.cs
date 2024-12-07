@@ -2,7 +2,7 @@
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStrore.Logic.Commands.Product.Update
+namespace OnlineStrore.Logic.Commands.ProductNamespace.Update
 {
     public class UpdateProductCommand : IRequest<Guid>
     {

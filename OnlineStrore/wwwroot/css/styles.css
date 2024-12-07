@@ -82,10 +82,14 @@ nav {
     background-color: #34495e;
     padding: 10px;
     text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items:center;
 }
 
     nav a {
         color: #fff;
+        display: block;
         padding: 10px 20px;
         text-transform: uppercase;
     }
@@ -102,6 +106,17 @@ nav {
 
 /* Общие стили для модальных окон */
 .modal {
+    display: none;
+    position: fixed; /* Оставить модальное окно на экране */
+    z-index: 1; /* Расположить выше остальных элементов */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Включить прокрутку, если нужно */
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+}
+.modal-reg {
     position: fixed; /* Оставить модальное окно на экране */
     z-index: 1; /* Расположить выше остальных элементов */
     left: 0;
@@ -143,6 +158,95 @@ nav {
         text-decoration: none;
         cursor: pointer;
     }
+.search {
+    position: relative; /* Контекст для абсолютного позиционирования */
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}              
+
+    .search input {
+        width: 100px;
+        padding: 8px;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .search button {
+        padding: 8px;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+/* Окно результатов */
+.search-results {
+    position: absolute;
+    top: 100%; /* Под полем ввода */
+    left: 44%; /* Центрируем по горизонтали */
+    transform: translateX(-50%); /* Смещение для центрирования */
+    width: 200px; /* Ширина окна */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Скрыто по умолчанию */
+    z-index: 1000;
+}
+
+.search-results-header {
+    display: flex;
+    justify-content: center; /* Центрируем текст */
+    align-items: center;
+    padding: 8px;
+    background-color: #f1f1f1;
+    color: black;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+    font-size: 14px;
+    position: relative;
+}
+
+    .search-results-header .close-button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: none;
+        border: none;
+        color: #333;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+.search-results ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 160px; /* Ограничение по высоте */
+    overflow-y: auto;
+}
+
+.search-results ul li {
+    padding: 8px;
+    text-align: center; /* Центрируем ссылки */
+    border-bottom: 1px solid #eee;
+}
+
+.search-results ul li:last-child {
+    border-bottom: none; /* Убираем последнюю линию */
+}
+
+    .search-results ul li a {
+        color: #000; /* Цвет текста черный */
+
+        text-decoration: none;
+        padding: 10px;
+        display: block; /* Полный клик на строку */
+        border-radius: 10px;
+    }
 
 /* Стили для кнопок */
 button {
@@ -159,6 +263,57 @@ button {
     button:hover {
         background-color: #161872; /* Цвет кнопки при наведении */
     }
+
+.slider {
+    position: relative;
+    width: 70%;
+    max-width: 800px;
+    overflow: hidden;
+    /*    border: 1px solid #ddd;*/
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрирует по горизонтали */
+    align-items: center; /* Центрирует по вертикали */
+    flex: 0 0 100%;
+    text-align: center;
+    height: 400px; /* Задайте фиксированную высоту слайда */
+    position: relative; /* Для адаптации к тексту ниже */
+    overflow: hidden; /* Скрывает все, что выходит за границы контейнера */
+}
+
+    .slide img {
+        max-width: 100%; /* Ограничивает ширину изображения */
+        max-height: 100%; /* Ограничивает высоту изображения */
+        object-fit: contain; /* Сохраняет пропорции изображения */
+        border-bottom: 1px solid #ddd;
+        border-radius: 10px;
+    }
+
+.cart-item{
+    display: flex;
+    justify-content: space-between;
+    padding : 10px;
+    align-items: center;
+
+}
+
+/*.cart-count {*/
+    /*background-color: red;*/
+    /*color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    vertical-align: top;
+    margin-left: 5px;
+}*/
 
 /* Стили для полей ввода */
 input[type="text"],
@@ -332,7 +487,10 @@ textarea {
     flex-wrap : wrap;
     justify-content : space-between; 
 }
-
+.slider-container {
+    display: flex;
+    justify-content: center;
+}
 /*.catalog-flex div{
     width : 400px;
 }*/

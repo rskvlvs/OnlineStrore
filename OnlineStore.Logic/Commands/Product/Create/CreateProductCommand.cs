@@ -2,7 +2,7 @@
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStrore.Logic.Commands.Product.Create
+namespace OnlineStrore.Logic.Commands.ProductNamespace.Create
 {
     public class CreateProductCommand : IRequest<Guid>
     {
