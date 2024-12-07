@@ -2,7 +2,7 @@
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineStrore.Logic.Commands.Product.Delete
+namespace OnlineStrore.Logic.Commands.ProductNamespace.Delete
 {
     public class DeleteProductCommand : IRequest
     {

@@ -2,7 +2,7 @@
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using OnlineStrore.Logic.Repositories.Interfaces;
 
-namespace OnlineStrore.Logic.Commands.Product.Update
+namespace OnlineStrore.Logic.Commands.ProductNamespace.Update
 {
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Guid>
     {

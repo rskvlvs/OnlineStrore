@@ -27,7 +27,7 @@ namespace OnlineStrore.Controllers
             bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
             if (!res)
                 return BadRequest();
-            var request = new CreateSaleCommand() { ClientId = id, TotalSum = saleDto.TotalSum };
+            var request = new CreateSaleCommand() { ClientId = id, TotalSum = saleDto.TotalSum, Products = saleDto.Products };
             var saleId = await mediator.Send(request, cancellationToken); 
             return Ok(saleId);
         }
@@ -44,19 +44,6 @@ namespace OnlineStrore.Controllers
             var sales = await mediator.Send(query, cancellationToken);
             return Ok(sales);
         }
-
-        [Authorize]
-        [HttpGet("lastSale")]
-        public async Task<ActionResult<SaleVm>> GetLastUserSale(CancellationToken cancellationToken)
-        {
-            bool res = Guid.TryParse(HttpContext.User.FindFirst("clientId")?.Value, out Guid id);
-            if (!res)
-                return BadRequest();
-            var query = new GetSaleQuery() { UserId = id };
-            var sales = await mediator.Send(query, cancellationToken);
-            return Ok(sales);
-        }
-
 
         [HttpDelete("deleteSale")]
         public async Task<IActionResult> DeleteSale(Guid id, CancellationToken cancellationToken)

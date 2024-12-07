@@ -4,8 +4,16 @@
     <a href="@Url.Action("Catalog", "Product", new{TypeName = "Шкафы"})">Шкафы</a>
     <a href="@Url.Action("Catalog", "Product", new{TypeName = "Диваны"})">Диваны</a>
     <a href="@Url.Action("Catalog", "Product", new{TypeName = "Кровати"})">Кровати</a>
-    <span class="search-bar">
-        <input type="text" id="search-input" placeholder="Поиск...">
-        <input type="button" value="Поиск" onclick="searchFunction()">
-    </span>
+    <div class="search">
+        <input type="text" id="searchInput" placeholder="Поиск по сайту..." />
+        <button type="button" id="clearButton">✖</button>
+        <div id="searchResults" class="search-results">
+            <div class="search-results-header">
+                <span>Результаты поиска</span>
+                @* <button class="close-button" onclick="hideSearchResults()">✖</button> *@
+            </div>
+            <ul class="resultsList" id="resultsList"></ul>
+        </div>
+    </div>
 </nav>
+

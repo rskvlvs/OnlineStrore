@@ -19,6 +19,7 @@ namespace OnlineStrore.Logic.Repositories
                 DateTime = DateTime.Now,
                 ClientId = request.ClientId,
                 TotalSum = request.TotalSum ?? 0,
+                Products = request.Products
             };
             await context.Sales.AddAsync(sale, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);

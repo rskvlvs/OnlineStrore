@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using OnlineStore.Logic.Auth.Hasher;
 using OnlineStore.Logic.Commands.Client.Login;
 using OnlineStore.Logic.JWT;
+using OnlineStore.Logic.Repositories.Interfaces;
 using OnlineStore.Storage.MS_SQL;
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using OnlineStrore.Logic.Commands.Client.Create;
@@ -18,14 +19,16 @@ namespace OnlineStrore.Logic.Repositories
     {
         private readonly IPasswordHasher passwordHasher;
         private readonly IJwtPorvider jwtProvider; 
+        private readonly ICartRepository cartRepository;
 
-        public ClientRepository(IPasswordHasher _passwordHasher, IJwtPorvider _jwtprovider)
-            => (passwordHasher, jwtProvider) = (_passwordHasher, _jwtprovider);
+        public ClientRepository(IPasswordHasher _passwordHasher, IJwtPorvider _jwtprovider, ICartRepository _cartRepositpry)
+            => (passwordHasher, jwtProvider, cartRepository) = (_passwordHasher, _jwtprovider, _cartRepositpry);
         public async Task<string> CreateClientAsync(IContext context, CreateClientCommand request, CancellationToken cancellationToken)
         {
             if (await context.Clients.FirstOrDefaultAsync(c => c.Email == request.Email, cancellationToken) != null)
                 throw new ValidationException("Client with this Email has already been created");
             Guid id = Guid.NewGuid();
+
             var hashedpassword = passwordHasher.Generate(request.Password);
             var client = new Client()
             {
@@ -35,8 +38,12 @@ namespace OnlineStrore.Logic.Repositories
                 Password = hashedpassword,
                 PhoneNumber = request.PhoneNubmer
             };
+
             await context.Clients.AddAsync(client, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
+
+            await cartRepository.CreateClientCartAsync(context, client.Id, cancellationToken); 
+
             var token = jwtProvider.GenerateToken(client);
             
             return token;

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
+using OnlineStore.Storage.MS_SQL;
 
 namespace OnlineStrore.Logic.Commands.Sale.Create
 {
@@ -9,6 +10,8 @@ namespace OnlineStrore.Logic.Commands.Sale.Create
         public Guid ClientId { get; set; }
 
         public double? TotalSum { get; set; }
+
+        public ICollection<Product> Products { get; set; }
     }
     public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
     {
@@ -16,6 +19,7 @@ namespace OnlineStrore.Logic.Commands.Sale.Create
         {
             RuleFor(CreateSaleCommand => CreateSaleCommand.ClientId).NotEqual(Guid.Empty).WithMessage("ClientId field is required");
             RuleFor(CreateSaleCommand => CreateSaleCommand.TotalSum).NotEmpty().WithMessage("Total sum field is required");
+            RuleFor(create => create.Products).NotEmpty(); 
         }
     }
 }

@@ -36,10 +36,15 @@
                     <td>
                         <h2>@ViewData["clientName"].ToString()</h2>
                     </td>
-                    <td>
-                        <button><a href="@Url.Action("Logout", "Client")"> Выйти</a></button>
-                        <button><a href="@Url.Action("Basket", "Client")"> Корзина</a></button>
+                    <td>               
+                        @* <button><a href="@Url.Action("Basket", "Client")"> *@
+                        <button onclick="showCartModal()">
+                                Корзина 
+                                (<span id="cart-count" class="cart-count"></span>)
+                        </button>                     
                         <button><a href="@Url.Action("Feedback", "Client")">Оставить отзыв</a></button>
+
+                        <button><a href="@Url.Action("Logout", "Client")"> Выйти</a></button>
                     </td>
                 }
             </tr>
@@ -58,6 +63,16 @@
         </div>
     </div>
 
+    @* Для корзины  *@
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideCartModal()">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cartItems">
+                <!-- Содержимое корзины будет загружено здесь -->
+            </div>
+        </div>
+    </div>
     <!-- Футер сайта -->
     @Html.Partial("~/Views/Shared/footer.cshtml")
 

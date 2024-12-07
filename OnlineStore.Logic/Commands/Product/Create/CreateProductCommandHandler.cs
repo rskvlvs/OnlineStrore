@@ -2,7 +2,7 @@
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
 using OnlineStrore.Logic.Repositories.Interfaces;
 
-namespace OnlineStrore.Logic.Commands.Product.Create
+namespace OnlineStrore.Logic.Commands.ProductNamespace.Create
 {
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Guid>
     {

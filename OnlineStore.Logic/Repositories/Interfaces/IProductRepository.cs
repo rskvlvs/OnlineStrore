@@ -1,7 +1,7 @@
 ﻿using OnlineStore.Storage.MS_SQL;
 using OnlineStore.Storage.MS_SQL.DataBase.Interfaces;
-using OnlineStrore.Logic.Commands.Product.Create;
-using OnlineStrore.Logic.Commands.Product.Update;
+using OnlineStrore.Logic.Commands.ProductNamespace.Create;
+using OnlineStrore.Logic.Commands.ProductNamespace.Update;
 
 
 

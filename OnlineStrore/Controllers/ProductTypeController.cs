@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStrore.Dto;
-using OnlineStrore.Logic.Commands.Product.Update;
+using OnlineStrore.Logic.Commands.ProductNamespace.Update;
 using OnlineStrore.Logic.Commands.ProductType.Create;
 using OnlineStrore.Logic.Commands.ProductType.Delete;
 using OnlineStrore.Logic.Commands.ProductType.Update;

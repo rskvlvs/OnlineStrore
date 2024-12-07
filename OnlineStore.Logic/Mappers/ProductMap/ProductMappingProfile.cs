@@ -11,6 +11,8 @@ namespace OnlineStrore.Logic.Mappers.ProductMap
         public ProductMappingProfile()
         {
             CreateMap<Product, ProductVm>()
+                .ForMember(p => p.Id,
+                src => src.MapFrom(src => src.Id))
                 .ForMember(p => p.Name,
                 src => src.MapFrom(src => src.Name))
                 .ForMember(p => p.Cost,
